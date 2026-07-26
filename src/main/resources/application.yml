@@ -1,18 +1,24 @@
 spring:
   application:
     name: tlias_wed_management
-
-    #数据库的连接信息
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/tlias
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tlias?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
 
-  #mybatis配置
+# mybatis顶格，和spring同一层级，前面无空格
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:com/leaning/mapper/*.xml
+  type-aliases-package: com.leaning.pojo
 
-    #驼峰命名
-    map_underscore_to_camel_case: true
+
+
+aliyun:
+    oss:
+      endpoint: https://oss-cn-beijing.aliyuncs.com
+      bucketName: h-tlias-web-management
+      region: cn-beijing

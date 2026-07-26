@@ -2,14 +2,18 @@ package com.leaning.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.leaning.mapper.EmpExprMapper;
 import com.leaning.mapper.EmpMapper;
 
 import com.leaning.pojo.Emp;
+import com.leaning.pojo.EmpExpr;
 import com.leaning.pojo.EmpQueryParam;
 import com.leaning.pojo.PageResult;
 import com.leaning.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,6 +23,8 @@ import java.util.List;
 public class EmpServiceImpl implements EmpService {
     @Autowired
     private EmpMapper empMapper;
+    @Autowired
+    private EmpExprMapper empExprMapper;
 
    /*
    ----------------------------------------原始分页查询语句---------------------------------------------------
@@ -64,5 +70,23 @@ public class EmpServiceImpl implements EmpService {
         return new PageResult<>(p.getTotal(), p.getResult());
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void add(Emp emp) {
+        //员工基本信息
+        emp.setCreateTime(LocalDateTime.now()); //创建时间
+        emp.setUpdateTime(LocalDateTime.now());//修改时间
+        empMapper.add(emp);//调用Mapper接口，添加员工
+        //员工工作经历
+        List<EmpExpr> exprList=emp.getExprList();
+        if(!CollectionUtils.isEmpty(exprList)){
 
+           for(EmpExpr empExpr:exprList){
+               empExpr.setEmpId(emp.getId());
+           }
+            empExprMapper.insertBatch(exprList);
+        }
+
+
+    }
 }
