@@ -17,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -59,6 +60,7 @@ public class EmpServiceImpl implements EmpService {
 
     */
 
+
     @Override
     public PageResult<Emp> page(EmpQueryParam empQueryParam) {
         //设置分页参数
@@ -87,6 +89,39 @@ public class EmpServiceImpl implements EmpService {
             empExprMapper.insertBatch(exprList);
         }
 
+    }
 
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void delete(List<Integer> ids) {
+        empMapper.deleteById(ids);
+        empExprMapper.deleteByEmpId(ids);
+
+    }
+
+    @Override
+    public Emp getById(Integer id) {
+        Emp emp=empMapper.getById(id);
+        return emp;
+    }
+
+    @Transactional
+    @Override
+    public void update(Emp emp) {
+        //1. 根据ID更新员工基本信息
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.updateById(emp);
+
+        //2. 根据员工ID删除员工的工作经历信息 【删除老的】
+        empExprMapper.deleteByEmpId(Arrays.asList(emp.getId()));
+
+        //3. 新增员工的工作经历数据 【新增新的】
+        Integer empId = emp.getId();
+        List<EmpExpr> exprList = emp.getExprList();
+        if(!CollectionUtils.isEmpty(exprList)){
+            exprList.forEach(empExpr -> empExpr.setEmpId(empId));
+            empExprMapper.insertBatch(exprList);
+        }
     }
 }

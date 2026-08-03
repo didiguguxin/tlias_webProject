@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Slf4j
@@ -39,6 +40,7 @@ public class EmpController {
    }
 
      */
+    //查询员工
     @GetMapping
 
     public Result page(EmpQueryParam empQueryParam) {
@@ -48,10 +50,35 @@ public class EmpController {
 
     }
 
+    //添加员工
     @PostMapping
     public Result add(@RequestBody Emp emp) {
         log.info("添加员工:"+emp);
         empService.add(emp);
+        return Result.success();
+    }
+
+    //删除员工
+    @DeleteMapping
+    public Result delete(@RequestParam List<Integer> ids) {
+        log.info("删除员工:"+ids);
+        empService.delete(ids);
+        return Result.success();
+    }
+
+    //-------员工修改
+    //查询员工
+    @GetMapping("/{id}")
+    public Result update(@PathVariable Integer id) {
+        log.info("员工查询:"+id);
+        Emp emp=empService.getById(id);
+        return Result.success(emp);
+    }
+    //修改员工
+    @PutMapping
+    public Result update(@RequestBody Emp emp) {
+        log.info("员工修改:"+emp);
+        empService.update(emp);
         return Result.success();
     }
 

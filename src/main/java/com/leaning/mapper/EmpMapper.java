@@ -2,10 +2,7 @@ package com.leaning.mapper;
 
 import com.leaning.pojo.Emp;
 import com.leaning.pojo.EmpQueryParam;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,8 +11,7 @@ import java.util.List;
 @Mapper
 public interface EmpMapper {
 /*
----------------------------------------原始分页查询实现---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //返回查询总条数
+---------------------------------------原始分页查询实现----------
     @Select("select count(*)from emp left join dept on emp.dept_id = dept.id")
     public long count();
 
@@ -26,6 +22,8 @@ public interface EmpMapper {
 
 
  */
+
+
     /*
         @Select("select emp.*,dept.name from emp left join dept on emp.dept_id = dept.id " +
                 "order by emp.update_time desc  ")
@@ -40,7 +38,9 @@ public interface EmpMapper {
                 "                      order by emp.update_time desc")
 
       */
-        public List<Emp> list(String name, Integer gender, LocalDate begin, LocalDate end);
+
+
+    public List<Emp> list(String name, Integer gender, LocalDate begin, LocalDate end);
 
     List<Emp> list(EmpQueryParam empQueryParam);
 
@@ -48,6 +48,13 @@ public interface EmpMapper {
     @Insert("insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
             "values(#{username}, #{name}, #{gender}, #{phone}, #{job}, #{salary}, #{image}, #{entryDate}, #{deptId}, #{createTime}, #{updateTime})")
     void add(Emp emp);
+
+    void deleteById(List<Integer> ids);
+
+
+    Emp getById(Integer id);
+
+    void updateById(Emp emp);
 }
 
 
