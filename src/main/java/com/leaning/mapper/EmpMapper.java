@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 
 @Mapper
@@ -55,6 +56,16 @@ public interface EmpMapper {
     Emp getById(Integer id);
 
     void updateById(Emp emp);
+
+    List<Map<String, Object>> countEmpJobData();
+
+    List<Map<String, Object>> countEmpGenderData();
+
+    @Select("select id,name from emp")
+    List<Emp> listAll();
+
+    @Select("select count(*) from emp where dept_id = #{deptId}")
+    Long countEmpByDeptId(Integer deptId);
 }
 
 

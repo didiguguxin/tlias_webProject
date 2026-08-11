@@ -10,15 +10,14 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmpQueryParam {
-    private Integer page=1;
-    private Integer pageSize=10;
+public class ClazzQueryParam {
+    private Integer page;
+    private Integer pageSize;
     private String name;
-    private Integer gender;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate begin;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate end;
-
-
 }
+
+

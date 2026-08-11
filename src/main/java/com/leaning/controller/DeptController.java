@@ -36,7 +36,6 @@ public class DeptController {
     //@DeleteMapping("/depts")
     @DeleteMapping
     public Result delete(Integer id){
-        //System.out.println("删除部门IDbhhuh:"+ id);
         log.info("删除部门ID:"+ id);
         deptService.deleteById(id);
         return Result.success();

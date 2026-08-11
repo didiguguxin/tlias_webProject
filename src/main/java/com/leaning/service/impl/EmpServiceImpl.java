@@ -5,10 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.leaning.mapper.EmpExprMapper;
 import com.leaning.mapper.EmpMapper;
 
-import com.leaning.pojo.Emp;
-import com.leaning.pojo.EmpExpr;
-import com.leaning.pojo.EmpQueryParam;
-import com.leaning.pojo.PageResult;
+import com.leaning.pojo.*;
 import com.leaning.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,6 +58,7 @@ public class EmpServiceImpl implements EmpService {
     */
 
 
+    //分页查询
     @Override
     public PageResult<Emp> page(EmpQueryParam empQueryParam) {
         //设置分页参数
@@ -123,5 +121,11 @@ public class EmpServiceImpl implements EmpService {
             exprList.forEach(empExpr -> empExpr.setEmpId(empId));
             empExprMapper.insertBatch(exprList);
         }
+    }
+
+    @Override
+    public List<Emp> list() {
+        List<Emp> list = empMapper.listAll();
+        return list;
     }
 }
