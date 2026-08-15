@@ -2,6 +2,7 @@ package com.leaning.service;
 
 import com.leaning.pojo.Emp;
 import com.leaning.pojo.EmpQueryParam;
+import com.leaning.pojo.LoginInfo;
 import com.leaning.pojo.PageResult;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
@@ -26,4 +27,6 @@ public interface EmpService {
     void update(Emp emp);
 
     List<Emp> list();
+
+    LoginInfo login(Emp emp);
 }

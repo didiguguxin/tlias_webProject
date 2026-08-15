@@ -7,6 +7,8 @@ import com.leaning.mapper.EmpMapper;
 
 import com.leaning.pojo.*;
 import com.leaning.service.EmpService;
+import com.leaning.utils.JwtUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +17,11 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Service
 public class EmpServiceImpl implements EmpService {
     @Autowired
@@ -128,4 +133,24 @@ public class EmpServiceImpl implements EmpService {
         List<Emp> list = empMapper.listAll();
         return list;
     }
+
+
+    @Override
+    public LoginInfo login(Emp emp) {
+        Emp e = empMapper.selectByUsernameAndPassword(emp);
+        if(e != null){
+            log.info("用户登录成功，员工信息：{}", e);
+
+            //生成jwt令牌
+            Map<String,Object> dataMap = new HashMap<>();
+            dataMap.put("id", emp.getId());
+            dataMap.put("username", emp.getUsername());
+            String jwt = JwtUtils.generateJwt(dataMap);
+
+           LoginInfo loginInfo= new LoginInfo(e.getUsername(), e.getPassword(),e.getName(),jwt);
+           return loginInfo;
+        }
+        return null;
+    }
+
 }

@@ -19,7 +19,7 @@ import java.util.UUID;
 @Component
 public class AliyunOSSOperator {
 
-        //方式一: 通过@Value注解一个属性一个属性的注入
+        //通过@Value注解一个属性一个属性的注入
         @Value("${aliyun.oss.endpoint}")
         private String endpoint;
 
