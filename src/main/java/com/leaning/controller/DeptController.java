@@ -3,12 +3,8 @@ package com.leaning.controller;
 import com.leaning.pojo.Dept;
 import com.leaning.pojo.Result;
 import com.leaning.service.DeptService;
-import com.leaning.service.impl.DeptServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

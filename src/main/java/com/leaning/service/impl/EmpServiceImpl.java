@@ -143,8 +143,8 @@ public class EmpServiceImpl implements EmpService {
 
             //生成jwt令牌
             Map<String,Object> dataMap = new HashMap<>();
-            dataMap.put("id", emp.getId());
-            dataMap.put("username", emp.getUsername());
+            dataMap.put("id", e.getId());
+            dataMap.put("username", e.getUsername());
             String jwt = JwtUtils.generateJwt(dataMap);
 
            LoginInfo loginInfo= new LoginInfo(e.getUsername(), e.getPassword(),e.getName(),jwt);
@@ -152,5 +152,6 @@ public class EmpServiceImpl implements EmpService {
         }
         return null;
     }
+
 
 }
