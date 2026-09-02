@@ -29,4 +29,6 @@ public interface EmpService {
     List<Emp> list();
 
     LoginInfo login(Emp emp);
+
+
 }

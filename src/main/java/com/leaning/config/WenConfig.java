@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WenConfig implements WebMvcConfigurer {
 
-    @Autowired
+   @Autowired
     private com.leaning.interceptor.TokenInterceptor tokenInterceptor;
 
     @Override
@@ -17,4 +17,6 @@ public class WenConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login");
     }
+
+
 }
